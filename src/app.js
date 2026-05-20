@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const { engine } = require('express-handlebars');
@@ -23,8 +24,8 @@ app.use('/api/products', productsRouter);
 app.use('/api/carts', cartsRouter);
 app.use('/', viewsRouter);
 
-mongoose.connect('mongodb+srv://mandresproto_db_user:hthFGCCohf6ydBgx@backend1.oqrfvoi.mongodb.net/ecommerce?retryWrites=true&w=majority&appName=Backend1')
-    .then(() => console.log('Conectado a la base de datos de MongoDB Atlas'))
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => console.log('Conectado a la base de datos de MongoDB'))
     .catch(error => console.error('Error en la conexión:', error));
 
 const httpServer = app.listen(PORT, () => {
