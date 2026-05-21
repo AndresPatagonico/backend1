@@ -59,4 +59,14 @@ io.on('connection', async (socket) => {
             console.error('Error al eliminar producto por WebSockets:', error);
         }
     });
+
+    socket.on('updateProduct', async ({ id, data }) => {
+        try {
+            await productsDAO.update(id, data);
+            const updatedProducts = await productsDAO.findRaw();
+            io.emit('updateProducts', updatedProducts);
+        } catch (error) {
+            console.error('Error al actualizar producto por WebSockets:', error);
+        }
+    });
 });
